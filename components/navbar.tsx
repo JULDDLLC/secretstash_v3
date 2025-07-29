@@ -81,6 +81,17 @@ export const Navbar = () => {
             </Link>
 
             <Link
+              href="/docs"
+              className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-all duration-200 ${
+                isActive('/docs') 
+                  ? 'bg-primary text-primary-foreground' 
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+              }`}
+            >
+              <HelpCircle className="w-4 h-4" />
+              <span>Docs</span>
+            </Link>
+            <Link
               href="/pricing"
               className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-all duration-200 ${
                 isActive('/pricing') 
