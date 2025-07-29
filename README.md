@@ -54,7 +54,7 @@ npm run dev
 
 ### Step 3: Open in Your Browser
 
-Navigate to `http://localhost:5173` to see the application.
+Navigate to `http://localhost:3000` to see the application.
 
 ---
 
@@ -140,8 +140,8 @@ Click the **"Export PDF"** button to download a professional report of your secr
 
 ## 🛠️ Technical Stack
 
-- **Framework**: React 18 + TypeScript
-- **Build Tool**: Vite
+- **Framework**: Next.js 14 + React 18 + TypeScript
+- **Build Tool**: Next.js
 - **Styling**: Tailwind CSS with custom design system
 - **Animations**: Framer Motion
 - **Icons**: Lucide React
@@ -230,8 +230,8 @@ npm run dev
 # Build for production
 npm run build
 
-# Preview production build
-npm run preview
+# Start production server
+npm start
 
 # Run linting
 npm run lint
