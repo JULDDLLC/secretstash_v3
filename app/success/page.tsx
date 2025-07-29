@@ -37,7 +37,7 @@ export default function SuccessPage() {
   return (
     <div className="min-h-screen">
       <div className="container mx-auto px-4 py-12 pt-24">
-            <div className="max-w-2xl mx-auto text-center">
+        <div className="max-w-2xl mx-auto text-center">
               {/* Success Animation */}
               <div className="mb-8">
                 <div className="inline-flex p-6 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 mb-6 animate-pulse">
@@ -119,8 +119,7 @@ export default function SuccessPage() {
                 </p>
               </div>
             </div>
-          </div>
-        </div>
+      </div>
     </div>
   );
 }
