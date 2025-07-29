@@ -9,6 +9,14 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontSize: { // <--- ADD THIS BLOCK
+      '2xl': ['1.5rem', { lineHeight: '1.3' }],
+      '3xl': ['1.875rem', { lineHeight: '1.3' }],
+      '4xl': ['2.25rem', { lineHeight: '1.3' }],
+      '5xl': ['3rem', { lineHeight: '1.2' }],
+      '7xl': ['4.5rem', { lineHeight: '1.2' }],
+      '9xl': ['8rem', { lineHeight: '1.2' }],
+    },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
