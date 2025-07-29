@@ -2,7 +2,7 @@ export const products = [
   {
     id: 'secretstash-pro',
     name: 'SecretStash Pro',
-    price: 9.99,
+    price: 4.97,
     description: 'Complete digital organization for power users',
     features: [
       'Unlimited secrets storage',

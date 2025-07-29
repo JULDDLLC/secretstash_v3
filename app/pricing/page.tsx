@@ -87,14 +87,14 @@ export default function PricingPage() {
           <div className="relative glass rounded-2xl p-8 border border-cyan-500/50 ring-2 ring-cyan-500/20">
             <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
               <div className="bg-gradient-to-r from-cyan-500 to-purple-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
-                Most Popular
+                Exclusiver
               </div>
             </div>
 
             <div className="text-center mb-8">
               <h3 className="text-2xl font-bold text-foreground mb-2">SecretStash Pro</h3>
               <div className="mb-4">
-                <span className="text-4xl font-bold text-foreground">$9.99</span>
+                <span className="text-4xl font-bold text-foreground">$4.97</span>
                 <span className="text-muted-foreground">/month</span>
               </div>
               <p className="text-muted-foreground">Complete digital organization for power users</p>
