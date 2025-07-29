@@ -241,7 +241,7 @@ export default function DocsPage() {
                       <h3 className="text-xl font-semibold text-foreground mb-3">{item.title}</h3>
                       <p className="text-muted-foreground mb-4">{item.description}</p>
 
-                      {item.steps && (
+                      {'steps' in item && item.steps && (
                         <div className="space-y-2">
                           <h4 className="font-medium text-foreground">Steps:</h4>
                           <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
@@ -252,7 +252,7 @@ export default function DocsPage() {
                         </div>
                       )}
 
-                      {item.features && (
+                      {'features' in item && item.features && (
                         <div className="space-y-2">
                           <h4 className="font-medium text-foreground">Features:</h4>
                           <ul className="list-disc list-inside space-y-1 text-muted-foreground">
@@ -263,7 +263,7 @@ export default function DocsPage() {
                         </div>
                       )}
 
-                      {item.recommendations && (
+                      {'recommendations' in item && item.recommendations && (
                         <div className="space-y-2">
                           <h4 className="font-medium text-foreground">Recommendations:</h4>
                           <ul className="list-disc list-inside space-y-1 text-muted-foreground">
@@ -274,7 +274,7 @@ export default function DocsPage() {
                         </div>
                       )}
 
-                      {item.content && (
+                      {'content' in item && item.content && (
                         <div className="bg-muted/20 rounded-lg p-4 mt-4">
                           <p className="text-muted-foreground">{item.content}</p>
                         </div>
