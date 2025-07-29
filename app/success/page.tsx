@@ -1,17 +1,20 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
 import { CheckCircle, ArrowRight, Crown } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import Link from 'next/link';
 
 export default function SuccessPage() {
-  const searchParams = useSearchParams();
-  const sessionId = searchParams.get('session_id');
+  const [sessionId, setSessionId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Get session ID from URL params on client side only
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('session_id');
+    setSessionId(id);
+    
     // Simulate a brief loading period to show the success animation
     const timer = setTimeout(() => {
       setIsLoading(false);
