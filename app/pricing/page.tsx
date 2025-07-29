@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { PricingCard } from '@/components/pricing/pricing-card';
 import { Calculator, Check, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
