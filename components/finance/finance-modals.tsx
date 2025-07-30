@@ -68,7 +68,7 @@ export const IncomeModal = ({ isOpen, onClose, onSave, editingIncome }: IncomeMo
             />
           </div>
 
-         <div>
+       <div>
   <Label htmlFor="type">Type</Label>
   <Select
     value={formData.type}
@@ -91,6 +91,7 @@ export const IncomeModal = ({ isOpen, onClose, onSave, editingIncome }: IncomeMo
     </SelectContent>
   </Select>
 </div>
+
 
 
           <div>
