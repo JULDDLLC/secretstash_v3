@@ -33,10 +33,9 @@ export function IncomeModal({
   onSave,
   editingIncome,
 }: IncomeModalProps) {
-  const [formData, setFormData] = useState<Omit<
-    Parameters<IncomeModalProps["onSave"]>[0],
-    never
-  >>({
+  const [formData, setFormData] = useState<
+    Omit<Parameters<IncomeModalProps["onSave"]>[0], never>
+  >({
     name: "",
     type: "salary",
     amount: 0,
@@ -49,7 +48,6 @@ export function IncomeModal({
 
   useEffect(() => {
     if (editingIncome) {
-      // strip id/createdAt/updatedAt
       const { id, createdAt, updatedAt, ...rest } = editingIncome;
       setFormData(rest);
     } else {
@@ -79,6 +77,7 @@ export function IncomeModal({
             {editingIncome ? "Edit Income" : "Add Income"}
           </DialogTitle>
         </DialogHeader>
+
         <div className="space-y-4">
           <Label>Name</Label>
           <Input
@@ -125,7 +124,10 @@ export function IncomeModal({
           <Select
             value={formData.frequency}
             onValueChange={(v) =>
-              setFormData({ ...formData, frequency: v })
+              setFormData({
+                ...formData,
+                frequency: v as "weekly" | "monthly" | "quarterly" | "yearly",
+              })
             }
           >
             <SelectTrigger>
@@ -156,10 +158,9 @@ export function ExpenseModal({
   onSave,
   editingExpense,
 }: ExpenseModalProps) {
-  const [formData, setFormData] = useState<Omit<
-    Parameters<ExpenseModalProps["onSave"]>[0],
-    never
-  >>({
+  const [formData, setFormData] = useState<
+    Omit<Parameters<ExpenseModalProps["onSave"]>[0], never>
+  >({
     name: "",
     type: "other",
     amount: 0,
@@ -201,6 +202,7 @@ export function ExpenseModal({
             {editingExpense ? "Edit Expense" : "Add Expense"}
           </DialogTitle>
         </DialogHeader>
+
         <div className="space-y-4">
           <Label>Name</Label>
           <Input
@@ -235,11 +237,15 @@ export function ExpenseModal({
             </SelectContent>
           </Select>
 
-          <Label>Billing Cycle</Label>
+          <Label>Billing Cycle</Label>
           <Select
             value={formData.billingCycle}
             onValueChange={(v) =>
-              setFormData({ ...formData, billingCycle: v })
+              setFormData({
+                ...formData,
+                billingCycle:
+                  v as "weekly" | "monthly" | "quarterly" | "yearly",
+              })
             }
           >
             <SelectTrigger>
@@ -290,10 +296,9 @@ export function AccountModal({
   onSave,
   editingAccount,
 }: AccountModalProps) {
-  const [formData, setFormData] = useState<Omit<
-    Parameters<AccountModalProps["onSave"]>[0],
-    never
-  >>({
+  const [formData, setFormData] = useState<
+    Omit<Parameters<AccountModalProps["onSave"]>[0], never>
+  >({
     name: "",
     type: "checking",
     institution: "",
@@ -333,6 +338,7 @@ export function AccountModal({
             {editingAccount ? "Edit Account" : "Add Account"}
           </DialogTitle>
         </DialogHeader>
+
         <div className="space-y-4">
           <Label>Name</Label>
           <Input
