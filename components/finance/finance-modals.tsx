@@ -68,29 +68,30 @@ export const IncomeModal = ({ isOpen, onClose, onSave, editingIncome }: IncomeMo
             />
           </div>
 
-          <div>
-            <Label htmlFor="type">Type</Label>
-           <Select
-  value={formData.type}
-  onValueChange={(value) =>
-    setFormData((prev) => ({
-      ...prev,
-      type: value as IncomeStream['type'],
-    }))
-  }
->
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="salary">Salary</SelectItem>
-                <SelectItem value="freelance">Freelance</SelectItem>
-                <SelectItem value="business">Business</SelectItem>
-                <SelectItem value="investment">Investment</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+         <div>
+  <Label htmlFor="type">Type</Label>
+  <Select
+    value={formData.type}
+    onValueChange={(value) =>
+      setFormData((prev) => ({
+        ...prev,
+        type: value as IncomeStream['type'],
+      }))
+    }
+  >
+    <SelectTrigger>
+      <SelectValue />
+    </SelectTrigger>
+    <SelectContent>
+      <SelectItem value="salary">Salary</SelectItem>
+      <SelectItem value="freelance">Freelance</SelectItem>
+      <SelectItem value="business">Business</SelectItem>
+      <SelectItem value="investment">Investment</SelectItem>
+      <SelectItem value="other">Other</SelectItem>
+    </SelectContent>
+  </Select>
+</div>
+
 
           <div>
             <Label htmlFor="amount">Amount</Label>
