@@ -64,18 +64,18 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 glass border-b border-border/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center space-x-2 cursor-pointer mr-6"> {/* Added mr-6 here */}
+          <Link href="/" className="flex items-center space-x-2 cursor-pointer mr-6">
             <Image 
               src="/logo.png" 
               alt="SecretStash Logo" 
               width={32}
               height={32}
             />
-            <span className="text-xl font-bold gradient-text whitespace-nowrap">SecretStash</span> {/* Added whitespace-nowrap */}
+            <span className="text-xl font-bold gradient-text whitespace-nowrap">SecretStash</span>
           </Link>
 
           <div className="hidden md:flex items-center space-x-4">
-            <Link href="/"><Button variant="ghost">Home</Button></Link>
+            {/* REMOVED: <Link href="/"><Button variant="ghost">Home</Button></Link> */}
             <Link href="/dashboard"><Button variant="ghost">Vault</Button></Link>
             <Link href="/finance"><Button variant="ghost">Finance</Button></Link>
             <Link href="/snippets"><Button variant="ghost">Snippets</Button></Link>
@@ -83,12 +83,12 @@ export default function Navbar() {
           </div>
 
           {user ? (
-            <div className="flex items-center space-x-4 ml-auto"> {/* Added ml-auto here */}
-               <span className="text-sm text-muted-foreground whitespace-nowrap">Welcome!</span> {/* Added whitespace-nowrap */}
+            <div className="flex items-center space-x-4 ml-auto">
+               <span className="text-sm text-muted-foreground whitespace-nowrap">Welcome!</span>
                <Button onClick={handleLogout}>Logout</Button>
             </div>
           ) : (
-            <div className="flex items-center space-x-2 ml-auto"> {/* Added ml-auto here */}
+            <div className="flex items-center space-x-2 ml-auto">
               <Button onClick={handleLogin}>Login</Button>
               <Button onClick={handleLogin}>Sign Up</Button>
             </div>
