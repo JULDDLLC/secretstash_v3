@@ -7,9 +7,9 @@ import { Snippet } from '@/types/snippet';
 
 interface SnippetCardProps {
   snippet: Snippet;
-  onEdit: () => void;
-  onDelete: () => void;
-  onToggleFavorite: () => void;
+  onEdit: (snippet: Snippet) => void;
+  onDelete: (id: string) => void;
+  onToggleFavorite: (id: string) => void;
 }
 
 export const SnippetCard = ({ snippet, onEdit, onDelete, onToggleFavorite }: SnippetCardProps) => {
@@ -74,7 +74,7 @@ export const SnippetCard = ({ snippet, onEdit, onDelete, onToggleFavorite }: Sni
           <Button
             variant="ghost"
             size="icon"
-            onClick={onToggleFavorite}
+            onClick={() => onToggleFavorite(snippet.id)}
             className={snippet.isFavorite ? 'text-red-400' : ''}
             title={snippet.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
           >
@@ -103,7 +103,7 @@ export const SnippetCard = ({ snippet, onEdit, onDelete, onToggleFavorite }: Sni
           <Button
             variant="ghost"
             size="icon"
-            onClick={onEdit}
+            onClick={() => onEdit(snippet)}
             title="Edit snippet"
           >
             <Edit className="w-4 h-4" />
@@ -112,7 +112,7 @@ export const SnippetCard = ({ snippet, onEdit, onDelete, onToggleFavorite }: Sni
           <Button
             variant="ghost"
             size="icon"
-            onClick={onDelete}
+            onClick={() => onDelete(snippet.id)}
             className="text-red-400 hover:bg-red-500/20"
             title="Delete snippet"
           >
