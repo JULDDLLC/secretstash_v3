@@ -78,7 +78,7 @@ export const IncomeModal = ({ isOpen, onClose, onSave, editingIncome }: IncomeMo
       type: value as IncomeStream['type'],
     }))
   }
-> 
+>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
