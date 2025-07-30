@@ -31,10 +31,10 @@ export const IncomeModal = ({ isOpen, onClose, onSave, editingIncome }: IncomeMo
     e.preventDefault();
     onSave({
       name: formData.name,
-      type: formData.type as any,
+      type: formData.type as IncomeStream['type'],
       amount: formData.amount,
-      frequency: formData.frequency as any,
-      status: formData.status as any,
+      frequency: formData.frequency as IncomeStream['frequency'],
+      status: formData.status as IncomeStream['status'],
       link: formData.link,
       notes: formData.notes,
       tags: formData.tags.split(',').map(t => t.trim()).filter(Boolean)
@@ -70,15 +70,15 @@ export const IncomeModal = ({ isOpen, onClose, onSave, editingIncome }: IncomeMo
 
           <div>
             <Label htmlFor="type">Type</Label>
-          <Select
-  value={formData.type}
-  onValueChange={(value) =>
-    setFormData((prev) => ({
-      ...prev,
-      type: value as IncomeStream['type'],
-    }))
-  }
->
+            <Select
+              value={formData.type}
+              onValueChange={(value) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  type: value as IncomeStream['type'],
+                }))
+              }
+            >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -105,7 +105,12 @@ export const IncomeModal = ({ isOpen, onClose, onSave, editingIncome }: IncomeMo
 
           <div>
             <Label htmlFor="frequency">Frequency</Label>
-            <Select value={formData.frequency} onValueChange={(value) => setFormData(prev => ({ ...prev, frequency: value }))}>
+            <Select
+              value={formData.frequency}
+              onValueChange={(value) =>
+                setFormData((prev) => ({ ...prev, frequency: value as IncomeStream['frequency'] }))
+              }
+            >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -125,179 +130,6 @@ export const IncomeModal = ({ isOpen, onClose, onSave, editingIncome }: IncomeMo
             <Button type="submit" className="flex-1">
               <Plus className="w-4 h-4 mr-2" />
               {editingIncome ? 'Update' : 'Add'}
-            </Button>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
-};
-
-interface ExpenseModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSave: (expense: Omit<ExpenseFlow, 'id' | 'createdAt' | 'updatedAt'>) => void;
-  editingExpense?: ExpenseFlow;
-}
-
-export const ExpenseModal = ({ isOpen, onClose, onSave, editingExpense }: ExpenseModalProps) => {
-  const [formData, setFormData] = useState({
-    name: editingExpense?.name || '',
-    type: editingExpense?.type || 'subscription',
-    amount: editingExpense?.amount || 0,
-    billingCycle: editingExpense?.billingCycle || 'monthly',
-    category: editingExpense?.category || '',
-    status: editingExpense?.status || 'active',
-    link: editingExpense?.link || '',
-    notes: editingExpense?.notes || ''
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSave(formData as any);
-    onClose();
-  };
-
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative glass rounded-2xl p-6 w-full max-w-md">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold gradient-text">
-            {editingExpense ? 'Edit Expense' : 'Add Expense'}
-          </h2>
-          <Button variant="ghost" size="icon" onClick={onClose}>
-            <X className="w-5 h-5" />
-          </Button>
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <Label htmlFor="name">Name</Label>
-            <Input
-              id="name"
-              value={formData.name}
-              onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-              required
-            />
-          </div>
-
-          <div>
-            <Label htmlFor="category">Category</Label>
-            <Input
-              id="category"
-              value={formData.category}
-              onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
-              required
-            />
-          </div>
-
-          <div>
-            <Label htmlFor="amount">Amount</Label>
-            <Input
-              id="amount"
-              type="number"
-              value={formData.amount}
-              onChange={(e) => setFormData(prev => ({ ...prev, amount: Number(e.target.value) }))}
-              required
-            />
-          </div>
-
-          <div className="flex gap-3 pt-4">
-            <Button type="button" variant="outline" onClick={onClose} className="flex-1">
-              Cancel
-            </Button>
-            <Button type="submit" className="flex-1">
-              <Plus className="w-4 h-4 mr-2" />
-              {editingExpense ? 'Update' : 'Add'}
-            </Button>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
-};
-
-interface AccountModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSave: (account: Omit<Account, 'id' | 'createdAt' | 'updatedAt'>) => void;
-  editingAccount?: Account;
-}
-
-export const AccountModal = ({ isOpen, onClose, onSave, editingAccount }: AccountModalProps) => {
-  const [formData, setFormData] = useState({
-    name: editingAccount?.name || '',
-    type: editingAccount?.type || 'checking',
-    institution: editingAccount?.institution || '',
-    balance: editingAccount?.balance || 0,
-    status: editingAccount?.status || 'active',
-    link: editingAccount?.link || '',
-    notes: editingAccount?.notes || ''
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSave(formData as any);
-    onClose();
-  };
-
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative glass rounded-2xl p-6 w-full max-w-md">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold gradient-text">
-            {editingAccount ? 'Edit Account' : 'Add Account'}
-          </h2>
-          <Button variant="ghost" size="icon" onClick={onClose}>
-            <X className="w-5 h-5" />
-          </Button>
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <Label htmlFor="name">Name</Label>
-            <Input
-              id="name"
-              value={formData.name}
-              onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-              required
-            />
-          </div>
-
-          <div>
-            <Label htmlFor="institution">Institution</Label>
-            <Input
-              id="institution"
-              value={formData.institution}
-              onChange={(e) => setFormData(prev => ({ ...prev, institution: e.target.value }))}
-              required
-            />
-          </div>
-
-          <div>
-            <Label htmlFor="balance">Balance</Label>
-            <Input
-              id="balance"
-              type="number"
-              value={formData.balance}
-              onChange={(e) => setFormData(prev => ({ ...prev, balance: Number(e.target.value) }))}
-              required
-            />
-          </div>
-
-          <div className="flex gap-3 pt-4">
-            <Button type="button" variant="outline" onClick={onClose} className="flex-1">
-              Cancel
-            </Button>
-            <Button type="submit" className="flex-1">
-              <Plus className="w-4 h-4 mr-2" />
-              {editingAccount ? 'Update' : 'Add'}
             </Button>
           </div>
         </form>
