@@ -1,10 +1,13 @@
+// types/finance.ts
+
 export type IncomeType = 'salary' | 'freelance' | 'business' | 'investment' | 'other';
 export type ExpenseCategory = 'subscription' | 'utility' | 'loan' | 'insurance' | 'other';
 export type AccountType = 'checking' | 'savings' | 'credit' | 'investment' | 'crypto' | 'other';
+
 export interface IncomeStream {
   id: string;
   name: string;
-  type: 'salary' | 'freelance' | 'business' | 'investment' | 'other';
+  type: IncomeType;
   amount: number;
   frequency: 'weekly' | 'monthly' | 'quarterly' | 'yearly';
   status: 'active' | 'inactive' | 'pending';
@@ -18,7 +21,7 @@ export interface IncomeStream {
 export interface ExpenseFlow {
   id: string;
   name: string;
-  type: 'subscription' | 'utility' | 'loan' | 'insurance' | 'other';
+  type: ExpenseCategory;
   amount: number;
   billingCycle: 'weekly' | 'monthly' | 'quarterly' | 'yearly';
   category: string;
@@ -32,7 +35,7 @@ export interface ExpenseFlow {
 export interface Account {
   id: string;
   name: string;
-  type: 'checking' | 'savings' | 'credit' | 'investment' | 'crypto' | 'other';
+  type: AccountType;
   institution: string;
   balance: number;
   status: 'active' | 'inactive' | 'closed';
@@ -56,4 +59,33 @@ export interface FinanceData {
   expenseFlows: ExpenseFlow[];
   accounts: Account[];
   historicalData: HistoricalSnapshot[];
+}
+
+// Modal props
+export interface IncomeModalProps {
+  onSave: (data: {
+    name: string;
+    type: IncomeType;
+    amount: number;
+    frequency: string;
+  }) => void;
+}
+
+export interface ExpenseModalProps {
+  onSave: (data: {
+    name: string;
+    type: ExpenseCategory;
+    amount: number;
+    billingCycle: string;
+    category: string;
+  }) => void;
+}
+
+export interface AccountModalProps {
+  onSave: (data: {
+    name: string;
+    type: AccountType;
+    institution: string;
+    balance: number;
+  }) => void;
 }
