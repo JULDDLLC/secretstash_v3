@@ -1,143 +1,86 @@
 'use client';
 
-'use client';
-
-import React from 'react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Shield, Home, Lock, FileText, HelpCircle, Calculator, Code, DollarSign, Settings, LogIn, UserPlus } from 'lucide-react';
-import { useTheme } from '@/contexts/theme-context';
-import { Button } from './ui/button';
-import { Switch } from './ui/switch';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { createClient } from '@/lib/supabase/client';
+import { User } from '@supabase/supabase-js';
 
-export const Navbar = () => {
-  const { theme, setTheme } = useTheme();
-  const pathname = usePathname();
+export default function Navbar() {
+  const supabase = createClient();
+  const router = useRouter();
+  const [user, setUser] = useState<User | null>(null);
 
-  const isActive = (path: string) => pathname === path;
+  useEffect(() => {
+    const checkUser = async () => {
+        const { data } = await supabase.auth.getUser();
+        setUser(data.user);
+    };
+    checkUser();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null);
+      router.refresh();
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [router, supabase.auth]);
+
+  const handleLogin = async () => {
+    await supabase.auth.signInWithOAuth({
+      provider: 'github',
+      options: {
+        // THIS IS THE CRITICAL FIX FOR THE 404 ERROR
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
+  };
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+    router.push('/');
+  };
 
   return (
     <nav className="sticky top-0 z-50 glass border-b border-border/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 cursor-pointer">
-            <img 
+            <Image 
               src="/logo.png" 
               alt="SecretStash Logo" 
-              className="w-8 h-8"
+              width={32}
+              height={32}
             />
             <span className="text-xl font-bold gradient-text">SecretStash</span>
           </Link>
 
-          {/* Navigation Links */}
-          <div className="hidden md:flex items-center space-x-6">
-            <Link
-              href="/"
-              className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-all duration-200 ${
-                isActive('/') 
-                  ? 'bg-primary text-primary-foreground' 
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-              }`}
-            >
-              <Home className="w-4 h-4" />
-              <span>Home</span>
-            </Link>
-            
-            <Link
-              href="/dashboard"
-              className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-all duration-200 ${
-                isActive('/dashboard') 
-                  ? 'bg-primary text-primary-foreground' 
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-              }`}
-            >
-              <Lock className="w-4 h-4" />
-              <span>Vault</span>
-            </Link>
-
-            <Link
-              href="/finance"
-              className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-all duration-200 ${
-                isActive('/finance') 
-                  ? 'bg-primary text-primary-foreground' 
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-              }`}
-            >
-              <Calculator className="w-4 h-4" />
-              <span>Finance</span>
-            </Link>
-
-            <Link
-              href="/snippets"
-              className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-all duration-200 ${
-                isActive('/snippets') 
-                  ? 'bg-primary text-primary-foreground' 
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-              }`}
-            >
-              <Code className="w-4 h-4" />
-              <span>Snippets</span>
-            </Link>
-
-            <Link
-              href="/docs"
-              className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-all duration-200 ${
-                isActive('/docs') 
-                  ? 'bg-primary text-primary-foreground' 
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-              }`}
-            >
-              <HelpCircle className="w-4 h-4" />
-              <span>Docs</span>
-            </Link>
-            <Link
-              href="/pricing"
-              className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-all duration-200 ${
-                isActive('/pricing') 
-                  ? 'bg-primary text-primary-foreground' 
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-              }`}
-            >
-              <DollarSign className="w-4 h-4" />
-              <span>Pricing</span>
-            </Link>
-
-            <Link
-              href="/terms"
-              className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-all duration-200 ${
-                isActive('/terms') 
-                  ? 'bg-primary text-primary-foreground' 
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-              }`}
-            >
-              <FileText className="w-4 h-4" />
-              <span>Terms</span>
-            </Link>
+          <div className="hidden md:flex items-center space-x-4">
+            <Link href="/"><Button variant="ghost">Home</Button></Link>
+            <Link href="/dashboard"><Button variant="ghost">Vault</Button></Link>
+            <Link href="/finance"><Button variant="ghost">Finance</Button></Link>
+            <Link href="/snippets"><Button variant="ghost">Snippets</Button></Link>
+            <Link href="/docs"><Button variant="ghost">Docs</Button></Link>
           </div>
 
-          {/* Auth & Theme */}
-          <div className="flex items-center space-x-3">
-            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-              <LogIn className="w-4 h-4 mr-2" />
-              Login
-            </Button>
-            <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
-              <UserPlus className="w-4 h-4 mr-2" />
-              Sign Up
-            </Button>
-            <div className="flex items-center space-x-3">
-              <span className="text-sm text-muted-foreground">Light</span>
-              <Switch
-                checked={theme === 'dark'}
-                onCheckedChange={(checked) => setTheme(checked ? 'dark' : 'light')}
-                aria-label="Toggle theme"
-              />
-              <span className="text-sm text-muted-foreground">Dark</span>
+          {user ? (
+            <div className="flex items-center space-x-4">
+               <span className="text-sm text-muted-foreground">Welcome!</span>
+               <Button onClick={handleLogout}>Logout</Button>
             </div>
-          </div>
+          ) : (
+            <div className="flex items-center space-x-2">
+              <Button onClick={handleLogin}>Login</Button>
+              <Button onClick={handleLogin}>Sign Up</Button>
+            </div>
+          )}
         </div>
       </div>
     </nav>
   );
-};
+}

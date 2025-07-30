@@ -1,34 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  images: { unoptimized: true },
-  trailingSlash: true,
-  webpack: (config, { isServer }) => {
-    // Disable webpack optimization for better compatibility
-    config.optimization.minimize = false;
-    
-    // Handle module resolution issues
-    config.resolve.fallback = {
-      ...config.resolve.fallback,
-      fs: false,
-      net: false,
-      tls: false,
-    };
-    
-    // Fix for potential module issues
-    config.module.rules.push({
-      test: /\.m?js$/,
-      type: 'javascript/auto',
-      resolve: {
-        fullySpecified: false,
-      },
-    });
-    
-    return config;
-  },
+  reactStrictMode: true,
 };
 
 module.exports = nextConfig;
