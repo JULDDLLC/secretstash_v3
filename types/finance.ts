@@ -1,3 +1,6 @@
+export type IncomeType = 'salary' | 'freelance' | 'business' | 'investment' | 'other';
+export type ExpenseCategory = 'subscription' | 'utility' | 'loan' | 'insurance' | 'other';
+export type AccountType = 'checking' | 'savings' | 'credit' | 'investment' | 'crypto' | 'other';
 export interface IncomeStream {
   id: string;
   name: string;
