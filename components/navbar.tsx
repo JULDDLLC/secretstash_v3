@@ -1,3 +1,4 @@
+// julddllc/secretstash_v3/secretstash_v3-9f2bd58e77e7b4cedc824a27bcb5de2ea25e71e7/components/navbar.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -30,12 +31,25 @@ export default function Navbar() {
     };
   }, [router, supabase.auth]);
 
+  const getRedirectUrl = () => {
+    // Vercel automatically sets these environment variables
+    let url = process.env.NEXT_PUBLIC_SITE_URL || // Set this in Vercel for your production domain
+              process.env.NEXT_PUBLIC_VERCEL_URL || // Automatically set by Vercel for preview deployments
+              'http://localhost:3000'; // Fallback for local development
+
+    // Ensure it's HTTPS if not localhost
+    url = url.startsWith('http') ? url : `https://${url}`;
+    // Ensure trailing slash for consistency if needed, though '/auth/callback' handles it well
+    // url = url.endsWith('/') ? url : `${url}/`; 
+    
+    return `${url}/auth/callback`;
+  };
+
   const handleLogin = async () => {
     await supabase.auth.signInWithOAuth({
       provider: 'github',
       options: {
-        // THIS IS THE CRITICAL FIX FOR THE 404 ERROR
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: getRedirectUrl(), // Use the dynamic URL
       },
     });
   };
@@ -50,14 +64,14 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 glass border-b border-border/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center space-x-2 cursor-pointer">
+          <Link href="/" className="flex items-center space-x-2 cursor-pointer mr-6"> {/* Added mr-6 here */}
             <Image 
               src="/logo.png" 
               alt="SecretStash Logo" 
               width={32}
               height={32}
             />
-            <span className="text-xl font-bold gradient-text">SecretStash</span>
+            <span className="text-xl font-bold gradient-text whitespace-nowrap">SecretStash</span> {/* Added whitespace-nowrap */}
           </Link>
 
           <div className="hidden md:flex items-center space-x-4">
@@ -69,12 +83,12 @@ export default function Navbar() {
           </div>
 
           {user ? (
-            <div className="flex items-center space-x-4">
-               <span className="text-sm text-muted-foreground">Welcome!</span>
+            <div className="flex items-center space-x-4 ml-auto"> {/* Added ml-auto here */}
+               <span className="text-sm text-muted-foreground whitespace-nowrap">Welcome!</span> {/* Added whitespace-nowrap */}
                <Button onClick={handleLogout}>Logout</Button>
             </div>
           ) : (
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 ml-auto"> {/* Added ml-auto here */}
               <Button onClick={handleLogin}>Login</Button>
               <Button onClick={handleLogin}>Sign Up</Button>
             </div>
