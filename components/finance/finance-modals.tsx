@@ -70,15 +70,7 @@ export const IncomeModal = ({ isOpen, onClose, onSave, editingIncome }: IncomeMo
 
        <div>
   <Label htmlFor="type">Type</Label>
-  <Select
-    value={formData.type}
-    onValueChange={(value) =>
-      setFormData((prev) => ({
-        ...prev,
-        type: value as IncomeStream['type'],
-      }))
-    }
-  >
+<Select value={formData.type} onValueChange={(value) => setFormData(prev => ({ ...prev, type: value as IncomeStream['type'] }))}>
     <SelectTrigger>
       <SelectValue />
     </SelectTrigger>
