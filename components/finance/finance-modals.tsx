@@ -8,6 +8,13 @@ import { Label } from '../ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { IncomeStream, ExpenseFlow, Account } from '@/types/finance';
 
+import React from "react";
+// (your other imports)
+
+type IncomeType = "salary" | "freelance" | "business" | "investment" | "other";
+
+// your component code below...
+
 interface IncomeModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -70,7 +77,7 @@ export const IncomeModal = ({ isOpen, onClose, onSave, editingIncome }: IncomeMo
 
        <div>
   <Label htmlFor="type">Type</Label>
-<Select value={formData.type} onValueChange={(value) => setFormData(prev => ({ ...prev, type: value as IncomeStream['type'] }))}>
+<Select value={formData.type} onValueChange={(value) => setFormData(prev => ({ ...prev, type: value as IncomeType }))}>
     <SelectTrigger>
       <SelectValue />
     </SelectTrigger>
@@ -83,9 +90,6 @@ export const IncomeModal = ({ isOpen, onClose, onSave, editingIncome }: IncomeMo
     </SelectContent>
   </Select>
 </div>
-
-
-
           <div>
             <Label htmlFor="amount">Amount</Label>
             <Input
